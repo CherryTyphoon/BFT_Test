@@ -1,0 +1,28 @@
+- name: NTP
+  hosts: all
+  become: yes
+
+  tasks: 
+
+  - name: Install NTP
+    yum: 
+     name: ntp 
+     state: installed
+  
+  - name: Copy conf-file
+    copy: 
+      src: ~/ansible/files/ntp.conf 
+      dest: /etc/ntp.conf
+  
+  - name: Start and Enable NTP service
+    service: 
+     name: ntpd
+     state: started
+     enabled: yes
+    
+ 
+
+
+
+
+    
