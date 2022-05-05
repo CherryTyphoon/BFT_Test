@@ -9,10 +9,17 @@
      name: ntp 
      state: installed
   
-  - name: Copy conf-file
-    copy: 
-      src: ~/ansible/files/ntp.conf 
-      dest: /etc/ntp.conf
+  - name: Change ntp.conf
+    replace:
+     path: "/etc/ntp.conf"
+     regexp: '^server(.*)$'
+     replace: '#server\1'
+
+  - name: Add server
+    lineinfile:
+     path: "/etc/ntp.conf"
+     insertafter: '^#server 3(.*)$'
+     line: 'server 172.21.32.175' 
   
   - name: Start and Enable NTP service
     service: 
