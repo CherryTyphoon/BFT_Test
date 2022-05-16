@@ -1,0 +1,27 @@
+- name: NTP
+  hosts: test
+  vars: 
+    ntp_server: [172.21.32.175, centos.pool.ntp.org, ru.pool.ntp.org]
+ 
+  tasks: 
+  - name: Install NTP
+    yum: 
+     name: ntp 
+     state: installed
+  
+  - name: Add server
+    template:
+     src: ~/ansible/templates/ntp.conf_for.j2
+     dest: /etc/ntp.conf
+      
+  - name: Start and Enable NTP service
+    service: 
+     name: ntpd
+     state: started
+     enabled: yes
+ 
+
+
+
+
+    
